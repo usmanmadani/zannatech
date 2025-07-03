@@ -39,10 +39,10 @@ const About: React.FC = () => {
       description: 'Creative brand designer and marketing strategist with 7+ years of experience in brand identity and digital marketing.',
     },
     {
-      name: 'Michael Ogundimu',
-      role: 'Senior Developer',
+      name: 'Abba madani zanna',
+      role: 'social media manager',
       image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400',
-      description: 'Full-stack developer with expertise in mobile and web applications.',
+      description: 'digital marketing strategies including social media ads, SEO, Google ads,',
     },
   ];
 
