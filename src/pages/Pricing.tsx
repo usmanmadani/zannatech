@@ -247,6 +247,7 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
   );
 
   return (
+
     <div className="pt-20">
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-amber-50 to-white">
@@ -263,24 +264,6 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
         </div>
       </section>
 
-      {/* UI/UX Pricing */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">UI/UX Design Pricing</h2>
-            <p className="text-lg text-gray-600">Professional design solutions for every budget</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {uiuxPricing.map((plan, index) => (
-              <div key={index} className="animate-fade-in-up" style={{ animationDelay: `${index * 200}ms` }}>
-                <PricingCard plan={plan} category="uiux" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Development Pricing */}
       <section className="py-20 bg-gradient-to-br from-amber-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -293,6 +276,24 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
             {developmentPricing.map((plan, index) => (
               <div key={index} className="animate-fade-in-up" style={{ animationDelay: `${index * 200}ms` }}>
                 <PricingCard plan={plan} category="development" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* UI/UX Pricing */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">UI/UX Design Pricing</h2>
+            <p className="text-lg text-gray-600">Professional design solutions for every budget</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {uiuxPricing.map((plan, index) => (
+              <div key={index} className="animate-fade-in-up" style={{ animationDelay: `${index * 200}ms` }}>
+                <PricingCard plan={plan} category="uiux" />
               </div>
             ))}
           </div>
