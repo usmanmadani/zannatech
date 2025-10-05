@@ -67,7 +67,7 @@ const About: React.FC = () => {
             <div className="animate-fade-in-left">
               <h2 className="text-3xl font-bold text-gray-900 mb-6 animate-fade-in animation-delay-700">Our Story</h2>
               <p className="text-gray-600 mb-6 animate-fade-in animation-delay-1000">
-                Founded in 2019, ZannaTech Innovation Limited emerged from a vision to bridge the gap between 
+                Founded in 2023, ZannaTech Innovation Limited emerged from a vision to bridge the gap between 
                 traditional businesses and modern digital solutions. We recognized that many businesses in Nigeria 
                 and across Africa were struggling to adapt to the digital age.
               </p>
