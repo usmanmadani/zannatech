@@ -81,7 +81,16 @@ const Contact: React.FC = () => {
     {
       icon: Phone,
       title: 'Phone Number',
-      details: '+234 811 4910 4085',
+      details: (
+        <a
+          href="https://wa.me/2347045494824"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-green-600 hover:text-green-700 transition-colors"
+        >
+          +2347045494824
+        </a>
+      ),
       color: 'text-green-600'
     },
     {

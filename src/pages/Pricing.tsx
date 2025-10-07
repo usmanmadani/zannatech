@@ -265,7 +265,7 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
       </section>
 
       {/* Development Pricing */}
-      <section className="py-20 bg-gradient-to-br from-amber-50 to-white">
+      <section id="development-pricing" className="py-20 bg-gradient-to-br from-amber-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-fade-in">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Development Pricing</h2>
@@ -283,7 +283,7 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
       </section>
 
       {/* UI/UX Pricing */}
-      <section className="py-20 bg-white">
+      <section id="uiux-pricing" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-fade-in">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">UI/UX Design Pricing</h2>
@@ -301,7 +301,7 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
       </section>
 
       {/* Social Media Content Pricing */}
-      <section className="py-20 bg-white">
+      <section id="social-pricing" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-fade-in">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Social Media Content Pricing</h2>
@@ -319,7 +319,7 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
       </section>
 
       {/* Branding Pricing */}
-      <section className="py-20 bg-gradient-to-br from-amber-50 to-white">
+      <section id="branding-pricing" className="py-20 bg-gradient-to-br from-amber-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-fade-in">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Branding Pricing</h2>

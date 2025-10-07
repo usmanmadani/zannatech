@@ -9,8 +9,24 @@ interface ServiceCardProps {
 }
 
 const ServiceCard: React.FC<ServiceCardProps> = ({ icon: Icon, title, description, features }) => {
+  const handleClick = () => {
+    const sectionMap: Record<string, string> = {
+      'UI/UX Design': 'uiux-pricing',
+      'Website Development': 'development-pricing',
+      'Branding': 'branding-pricing',
+      'Social Media Management': 'social-pricing'
+    };
+    const sectionId = sectionMap[title];
+    if (sectionId) {
+      window.location.href = `/pricing#${sectionId}`;
+    }
+  };
+
   return (
-    <div className="bg-white rounded-xl p-8 shadow-sm hover:shadow-lg transition-all duration-200 border border-gray-100">
+    <div 
+      onClick={handleClick}
+      className="bg-white rounded-xl p-8 shadow-sm hover:shadow-lg transition-all duration-200 border border-gray-100 cursor-pointer"
+    >
       <div className="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
         <Icon className="text-blue-600" size={28} />
       </div>
