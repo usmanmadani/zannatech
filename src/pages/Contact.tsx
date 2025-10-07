@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MapPin, Phone, Mail, Clock, Send, CheckCircle, AlertCircle, Loader } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Send, CheckCircle, AlertCircle, Loader, Facebook, Instagram, Twitter } from 'lucide-react';
 import { sendContactEmail, type ContactFormData } from '../services/emailService';
 
 const Contact: React.FC = () => {
@@ -42,33 +42,16 @@ const Contact: React.FC = () => {
     return true;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!validateForm()) return;
 
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const success = await sendContactEmail(formData);
-      
-      if (success) {
-        setIsSubmitted(true);
-        // Reset form after successful submission
-        setTimeout(() => {
-          setIsSubmitted(false);
-          setFormData({ name: '', email: '', subject: '', message: '' });
-        }, 5000);
-      } else {
-        setError('Failed to send message. Please try again or contact us directly.');
-      }
-    } catch (err) {
-      setError('An unexpected error occurred. Please try again later.');
-      console.error('Contact form error:', err);
-    } finally {
-      setIsLoading(false);
-    }
+    // Format the WhatsApp message
+    const message = `*New Contact Request*\n\nName: ${formData.name}\nEmail: ${formData.email}\nService: ${formData.subject}\n\nMessage: ${formData.message}`;
+    
+    // Redirect to WhatsApp with pre-filled message
+    window.open(`https://wa.me/2347045494824?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   const contactInfo = [
@@ -151,6 +134,42 @@ const Contact: React.FC = () => {
                 <p className="text-gray-600">{info.details}</p>
               </div>
             ))}
+          </div>
+
+          {/* Social Media Links */}
+          <div className="flex justify-center space-x-8 mt-12">
+            <a
+              href="https://wa.me/2347045494824"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-green-500 text-white p-4 rounded-full hover:bg-green-600 transition-colors duration-300"
+            >
+              <Phone size={24} />
+            </a>
+            <a
+              href="https://facebook.com/zannatech"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-blue-600 text-white p-4 rounded-full hover:bg-blue-700 transition-colors duration-300"
+            >
+              <Facebook size={24} />
+            </a>
+            <a
+              href="https://instagram.com/zannatech"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-pink-600 text-white p-4 rounded-full hover:bg-pink-700 transition-colors duration-300"
+            >
+              <Instagram size={24} />
+            </a>
+            <a
+              href="https://x.com/zannatech"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-black text-white p-4 rounded-full hover:bg-gray-900 transition-colors duration-300"
+            >
+              <Twitter size={24} />
+            </a>
           </div>
         </div>
       </section>
