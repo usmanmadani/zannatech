@@ -1,57 +1,71 @@
-import React, { useState } from 'react';
-import { MapPin, Phone, Mail, Clock, Send, CheckCircle, AlertCircle, Loader, Facebook, Instagram, Twitter } from 'lucide-react';
-import { sendContactEmail, type ContactFormData } from '../services/emailService';
+import React, { useEffect } from 'react';
+import { MapPin, Phone, Mail, Clock, Facebook, Instagram, Twitter } from 'lucide-react';
 
 const Contact: React.FC = () => {
-  const [formData, setFormData] = useState<ContactFormData>({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  // Hook for tracking scroll position
+  const [scrollY, setScrollY] = React.useState(0);
+  const [isMobile, setIsMobile] = React.useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-    // Clear error when user starts typing
-    if (error) setError(null);
-  };
+  React.useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
 
-  const validateForm = (): boolean => {
-    if (!formData.name.trim()) {
-      setError('Please enter your full name');
-      return false;
-    }
-    if (!formData.email.trim() || !/\S+@\S+\.\S+/.test(formData.email)) {
-      setError('Please enter a valid email address');
-      return false;
-    }
-    if (!formData.subject.trim()) {
-      setError('Please select a service');
-      return false;
-    }
-    if (!formData.message.trim() || formData.message.length < 10) {
-      setError('Please provide project details (minimum 10 characters)');
-      return false;
-    }
-    return true;
-  };
+    // Initial checks
+    handleResize();
+    handleScroll();
 
-  const handleSubmit = (e: React.FormEvent) => {
+    // Add event listeners
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!validateForm()) return;
 
-    // Format the WhatsApp message
-    const message = `*New Contact Request*\n\nName: ${formData.name}\nEmail: ${formData.email}\nService: ${formData.subject}\n\nMessage: ${formData.message}`;
-    
-    // Redirect to WhatsApp with pre-filled message
-    window.open(`https://wa.me/2347045494824?text=${encodeURIComponent(message)}`, '_blank');
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      // Send form data to Formspree
+      const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          _replyto: formData.email
+        }),
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        
+        // Format the WhatsApp message
+        const message = `*New Contact Request*\n\nName: ${formData.name}\nEmail: ${formData.email}\nService: ${formData.subject}\n\nMessage: ${formData.message}`;
+        
+        // Redirect to WhatsApp with pre-filled message
+        window.open(`https://wa.me/2347045494824?text=${encodeURIComponent(message)}`, '_blank');
+      } else {
+        setError('Failed to send message. Please try again or contact us via WhatsApp.');
+      }
+    } catch (error) {
+      setError('An error occurred while sending the message. Please try again.');
+      console.error('Form submission error:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const contactInfo = [
@@ -147,7 +161,7 @@ const Contact: React.FC = () => {
               <Phone size={24} />
             </a>
             <a
-              href="https://facebook.com/zannatech"
+              href="https://www.facebook.com/share/19nmxpgoDY/"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-blue-600 text-white p-4 rounded-full hover:bg-blue-700 transition-colors duration-300"
@@ -155,7 +169,7 @@ const Contact: React.FC = () => {
               <Facebook size={24} />
             </a>
             <a
-              href="https://instagram.com/zannatech"
+              href="https://www.instagram.com/zanna_tech_/?utm_source=qr&r=nametag"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-pink-600 text-white p-4 rounded-full hover:bg-pink-700 transition-colors duration-300"
@@ -163,7 +177,7 @@ const Contact: React.FC = () => {
               <Instagram size={24} />
             </a>
             <a
-              href="https://x.com/zannatech"
+              href="https://twitter.com/zannatechi"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-black text-white p-4 rounded-full hover:bg-gray-900 transition-colors duration-300"
@@ -178,130 +192,122 @@ const Contact: React.FC = () => {
       <section className="py-20 bg-gradient-to-br from-amber-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Contact Form */}
-            <div className="bg-white p-8 rounded-2xl shadow-lg border border-amber-100 animate-fade-in-left">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h2>
+            {/* Google Form */}
+            <div 
+              className="bg-white p-4 md:p-8 rounded-2xl shadow-lg border border-amber-100 animate-fade-in-left relative overflow-hidden group"
+              style={{
+                transform: `perspective(1000px) rotateX(${scrollY * 0.02}deg)`,
+                transition: 'transform 0.3s ease-out'
+              }}
+            >
+              {/* Decorative Background Elements */}
+              <div 
+                className="absolute -top-20 -right-20 w-40 h-40 bg-amber-100 rounded-full opacity-20 blur-2xl group-hover:bg-amber-200 transition-all duration-500"
+                style={{ transform: `translateY(${scrollY * 0.1}px)` }}
+              ></div>
+              <div 
+                className="absolute -bottom-20 -left-20 w-40 h-40 bg-amber-100 rounded-full opacity-20 blur-2xl group-hover:bg-amber-200 transition-all duration-500"
+                style={{ transform: `translateY(${-scrollY * 0.1}px)` }}
+              ></div>
               
-              {isSubmitted ? (
-                <div className="text-center py-12 animate-fade-in">
-                  <CheckCircle className="text-green-500 mx-auto mb-4 animate-bounce" size={64} />
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Message Sent Successfully!</h3>
-                  <p className="text-gray-600 mb-4">
-                    Thank you for contacting us. We've received your message and will get back to you within 24 hours.
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    A copy has been sent to: zannatechinnovations@gmail.com
-                  </p>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  {error && (
-                    <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-center animate-fade-in">
-                      <AlertCircle className="text-red-500 mr-3 flex-shrink-0" size={20} />
-                      <p className="text-red-700 text-sm">{error}</p>
-                    </div>
-                  )}
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="animate-fade-in-up" style={{ animationDelay: '200ms' }}>
-                      <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                        Full Name *
-                      </label>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        required
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        disabled={isLoading}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 hover:border-amber-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                        placeholder="Enter your full name"
-                      />
-                    </div>
-                    <div className="animate-fade-in-up" style={{ animationDelay: '300ms' }}>
-                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                        Email Address *
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        required
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        disabled={isLoading}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 hover:border-amber-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                        placeholder="Enter your email"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="animate-fade-in-up" style={{ animationDelay: '400ms' }}>
-                    <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
-                      Service Interest *
-                    </label>
-                    <select
-                      id="subject"
-                      name="subject"
-                      required
-                      value={formData.subject}
-                      onChange={handleInputChange}
-                      disabled={isLoading}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 hover:border-amber-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      <option value="">Select a service</option>
-                      {services.map((service) => (
-                        <option key={service} value={service}>
-                          {service}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="animate-fade-in-up" style={{ animationDelay: '500ms' }}>
-                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                      Project Details *
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      required
-                      rows={6}
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      disabled={isLoading}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 resize-none hover:border-amber-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                      placeholder="Tell us about your project requirements, timeline, and budget..."
-                    ></textarea>
-                    <p className="text-xs text-gray-500 mt-1">
-                      Minimum 10 characters ({formData.message.length}/10)
-                    </p>
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={isLoading}
-                    className="w-full bg-gradient-to-r from-amber-400 to-amber-500 text-white py-4 px-6 rounded-xl font-semibold hover:from-amber-500 hover:to-amber-600 transition-all duration-300 flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-105 animate-fade-in-up animation-delay-600 group disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              {/* Header */}
+              <div className="relative">
+                <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                  <span className="flex items-center space-x-2">
+                    <span className="relative">
+                      Send us a Message
+                      <div className="absolute -top-1 -right-3 w-2 h-2 bg-amber-500 rounded-full animate-ping"></div>
+                    </span>
+                  </span>
+                  <div 
+                    className="flex items-center justify-center space-x-3 bg-gradient-to-r from-green-50 to-green-100 px-3 py-1.5 rounded-full hover:shadow-lg transition-all duration-300 cursor-pointer group/status"
+                    onClick={() => window.open('https://wa.me/2347045494824', '_blank')}
                   >
-                    {isLoading ? (
-                      <>
-                        <Loader className="animate-spin mr-2" size={20} />
-                        Sending Message...
-                      </>
-                    ) : (
-                      <>
-                        Send Message
-                        <Send className="ml-2 transition-transform duration-300 group-hover:translate-x-1" size={20} />
-                      </>
-                    )}
-                  </button>
+                    <span className="text-sm text-green-600 font-medium group-hover/status:text-green-700">Available 24/7</span>
+                    <div className="relative">
+                      <div className="w-2 h-2 bg-green-500 rounded-full group-hover/status:bg-green-600"></div>
+                      <div className="absolute inset-0 w-2 h-2 bg-green-500 group-hover/status:bg-green-600 rounded-full animate-ping"></div>
+                    </div>
+                  </div>
+                </h2>
+              </div>
+              
+              {/* Form Container with Enhanced Loading State */}
+              <div className="w-full overflow-hidden rounded-xl bg-gradient-to-br from-amber-50/50 via-white to-amber-50/50 relative min-h-[600px] shadow-inner">
+                <div 
+                  className="absolute inset-0 flex items-center justify-center bg-white/90 backdrop-blur-sm transition-all duration-700 z-10" 
+                  id="loading-overlay"
+                  style={{ transformOrigin: 'center' }}
+                >
+                  <div className="text-center scale-110 transform transition-transform">
+                    <div className="relative">
+                      <div className="w-20 h-20 border-4 border-amber-200 rounded-full animate-spin"></div>
+                      <div className="w-20 h-20 border-4 border-amber-400 border-t-transparent rounded-full animate-spin absolute inset-0"></div>
+                      <div className="w-20 h-20 border-4 border-amber-500 border-t-transparent border-b-transparent rounded-full animate-spin absolute inset-0" style={{ animationDirection: 'reverse' }}></div>
+                    </div>
+                    <p className="text-amber-600 font-medium mt-4 animate-pulse">Loading your form...</p>
+                    <p className="text-amber-400 text-sm mt-1">This might take a few seconds</p>
+                  </div>
+                </div>
+                
+                <iframe
+                  src="https://docs.google.com/forms/d/e/1FAIpQLSfpe5386AAujc2ytZuIVLyvxatY7YAClplDibQo24NsgiGI2A/viewform?embedded=true"
+                  className="w-full border-0 transition-all duration-500 ease-in-out"
+                  style={{
+                    height: 'calc(100vh - 600px)',
+                    minHeight: '600px',
+                    maxHeight: '1000px',
+                  }}
+                  title="Contact Form"
+                  loading="lazy"
+                  onLoad={() => {
+                    const overlay = document.getElementById('loading-overlay');
+                    if (overlay) {
+                      overlay.style.opacity = '0';
+                      overlay.style.transform = 'scale(1.1)';
+                      setTimeout(() => {
+                        overlay.style.display = 'none';
+                      }, 700);
+                    }
+                  }}
+                >
+                  Loading...
+                </iframe>
+              </div>
 
-                  <p className="text-xs text-gray-500 text-center">
-                    Your message will be sent directly to zannatechinnovations@gmail.com
-                  </p>
-                </form>
-              )}
+              {/* Enhanced Form Info */}
+              <div className="mt-8 space-y-6">
+                <div className="bg-gradient-to-br from-amber-50 to-amber-100/50 p-6 rounded-xl">
+                  <h3 className="font-semibold text-amber-800 mb-4 flex items-center">
+                    <span className="text-2xl mr-2">📫</span>
+                    <span>What happens next?</span>
+                  </h3>
+                  <ul className="space-y-4">
+                    {[
+                      { text: 'Instant notification to our team', delay: '0' },
+                      { text: 'Response within 24 hours', delay: '150' },
+                      { text: 'Free consultation scheduling', delay: '300' }
+                    ].map((item, index) => (
+                      <li key={index} 
+                          className="flex items-center bg-white/50 p-3 rounded-lg transform hover:scale-102 transition-all duration-300"
+                          style={{ animationDelay: `${item.delay}ms` }}>
+                        <div className="relative mr-3 flex-shrink-0">
+                          <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
+                          <div className="absolute inset-0 w-2 h-2 bg-amber-500 rounded-full animate-ping opacity-40"></div>
+                        </div>
+                        <span className="text-sm text-amber-900">{item.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <div className="flex items-center justify-center space-x-2 text-sm text-gray-500">
+                  <div className="w-1.5 h-1.5 bg-amber-300 rounded-full animate-pulse"></div>
+                  <p>Messages are sent directly to zannatechinnovations@gmail.com</p>
+                  <div className="w-1.5 h-1.5 bg-amber-300 rounded-full animate-pulse"></div>
+                </div>
+              </div>
+            </div>
             </div>
 
             {/* Company Info */}
@@ -382,27 +388,40 @@ const Contact: React.FC = () => {
 
       {/* Newsletter Section */}
       <section className="py-20 bg-gradient-to-r from-amber-500 to-amber-600 relative overflow-hidden">
-        {/* Animated Background Elements */}
+        {/* Enhanced Animated Background Elements */}
         <div className="absolute inset-0">
-          <div className="absolute top-10 left-10 w-32 h-32 bg-white/10 rounded-full animate-float"></div>
-          <div className="absolute bottom-10 right-10 w-24 h-24 bg-white/10 rounded-full animate-float animation-delay-2000"></div>
-          <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white/10 rounded-full animate-float animation-delay-4000"></div>
+          <div className="absolute top-10 left-10 w-32 h-32 bg-white/10 rounded-full animate-float blur-xl"></div>
+          <div className="absolute bottom-10 right-10 w-24 h-24 bg-white/10 rounded-full animate-float animation-delay-2000 blur-xl"></div>
+          <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white/10 rounded-full animate-float animation-delay-4000 blur-xl"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-transparent via-amber-600/20 to-transparent"></div>
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <h2 className="text-3xl font-bold text-white mb-4 animate-fade-in">Stay Updated</h2>
-          <p className="text-xl text-amber-100 mb-8 animate-fade-in animation-delay-300">
+          <div className="inline-block">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 animate-fade-in relative">
+              Stay Updated
+              <div className="absolute -top-2 -right-2 w-2 h-2 bg-white rounded-full animate-ping"></div>
+            </h2>
+          </div>
+          <p className="text-xl text-amber-100 mb-8 animate-fade-in animation-delay-300 max-w-2xl mx-auto">
             Subscribe to our newsletter for tech insights and company updates
           </p>
-          <div className="max-w-md mx-auto flex animate-fade-in-up animation-delay-500">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 px-4 py-3 rounded-l-xl border-0 focus:ring-2 focus:ring-white transition-all duration-300"
-            />
-            <button className="bg-white text-amber-600 px-6 py-3 rounded-r-xl font-semibold hover:bg-gray-100 transition-all duration-300 hover:scale-105">
-              Subscribe
-            </button>
+          <div className="max-w-md mx-auto">
+            <div className="bg-white/10 backdrop-blur-md p-1 rounded-xl animate-fade-in-up animation-delay-500">
+              <div className="flex">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="flex-1 px-4 py-3 rounded-l-lg bg-white/90 border-0 focus:ring-2 focus:ring-amber-300 transition-all duration-300 placeholder-gray-400"
+                />
+                <button className="bg-white px-6 py-3 rounded-lg font-semibold text-amber-600 hover:bg-amber-50 transition-all duration-300 transform hover:scale-105 hover:shadow-lg ml-1">
+                  Subscribe
+                </button>
+              </div>
+            </div>
+            <p className="text-amber-200/80 text-sm mt-4 animate-fade-in animation-delay-700">
+              Join our growing community of tech enthusiasts! 🚀
+            </p>
           </div>
         </div>
       </section>
