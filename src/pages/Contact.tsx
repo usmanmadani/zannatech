@@ -372,19 +372,7 @@ const Contact: React.FC = () => {
                 </div>
               </div>
 
-              {/* Email Setup Instructions */}
-              <div className="bg-amber-50 p-6 rounded-2xl border border-amber-200 animate-fade-in-up animation-delay-1000">
-                <h3 className="text-lg font-semibold text-amber-800 mb-3">📧 Email Setup Required</h3>
-                <p className="text-sm text-amber-700 mb-3">
-                  To enable email functionality, please set up EmailJS with your credentials:
-                </p>
-                <ol className="text-xs text-amber-600 space-y-1 list-decimal list-inside">
-                  <li>Create an account at <a href="https://emailjs.com" target="_blank" rel="noopener noreferrer" className="underline">emailjs.com</a></li>
-                  <li>Create an email service and template</li>
-                  <li>Update the credentials in <code className="bg-amber-100 px-1 rounded">src/services/emailService.ts</code></li>
-                  <li>Configure the template to send to zannatechinnovations@gmail.com</li>
-                </ol>
-              </div>
+
             </div>
           </div>
         </div>
