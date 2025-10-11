@@ -174,7 +174,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, setCurrentPage }
                 </div>
                 <div className="flex items-center space-x-3">
                   <Phone size={18} className="text-amber-400 flex-shrink-0" />
-                  <span className="text-gray-300">+234 811 4910 4085</span>
+                  <a href="https://wa.me/23481149104085" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-green-600 transition-colors">+234 811 4910 4085</a>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Mail size={18} className="text-amber-400 flex-shrink-0" />

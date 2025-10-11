@@ -2,10 +2,11 @@ import React from 'react';
 import Hero from '../components/Hero';
 import { Users, Award, Clock, Star, ArrowRight } from 'lucide-react';
 
-const Home: React.FC = () => {
+const Home: React.FC<{ setCurrentPage?: (page: string) => void }> = ({ setCurrentPage }) => {
   const handleGetQuote = () => {
-    // This would typically scroll to contact section or open contact page
-    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    // Navigate to contact page when requesting a quote
+    if (setCurrentPage) setCurrentPage('contact');
+    else window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
   };
 
   const stats = [
@@ -57,7 +58,7 @@ const Home: React.FC = () => {
   return (
     <div>
       {/* Hero Section */}
-      <Hero onGetQuote={handleGetQuote} />
+  <Hero onGetQuote={() => (setCurrentPage ? setCurrentPage('services') : window.scrollTo({ top: 0 }))} />
 
       {/* Animated Stats Section */}
       <section className="py-20 bg-white">

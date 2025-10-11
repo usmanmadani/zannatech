@@ -50,6 +50,18 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
         '5-day delivery'
       ],
       popular: false
+    },
+    {
+      name: 'Flyer Design',
+      price: '₦3,000',
+      description: 'Single-page flyer design for events or promotions',
+      features: [
+        'Custom design',
+        'Print-ready files',
+        '2 revisions',
+        'Fast turnaround'
+      ],
+      popular: false
     }
   ];
 
@@ -101,12 +113,25 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
       ],
       popular: false
     }
+    ,
+    {
+      name: 'Flyer Design',
+      price: '\u20a63,000',
+      description: 'Single-page flyer design for events or promotions',
+      features: [
+        'Custom design',
+        'Print-ready files',
+        '2 revisions',
+        'Fast turnaround'
+      ],
+      popular: false
+    }
   ];
 
   const brandingPricing = [
     {
       name: 'Logo Only',
-      price: '₦10,000',
+      price: '₦5,000',
       description: 'Simple logo design',
       features: [
         '3 logo concepts',
@@ -144,6 +169,19 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
         'Packaging design',
         'Brand consultation',
         '14-day delivery'
+      ],
+      popular: false
+    }
+    ,
+    {
+      name: 'Slide Presentation',
+      price: '₦5,000',
+      description: 'Professional slide deck for pitches and presentations',
+      features: [
+        '10-15 slides',
+        'Custom design and icons',
+        'Editable PowerPoint / Google Slides',
+        '2 revisions'
       ],
       popular: false
     }
