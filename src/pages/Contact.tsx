@@ -5,6 +5,17 @@ const Contact: React.FC = () => {
   // Hook for tracking scroll position
   const [scrollY, setScrollY] = React.useState(0);
   const [isMobile, setIsMobile] = React.useState(false);
+  
+  // Form state
+  const [formData, setFormData] = React.useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isSubmitted, setIsSubmitted] = React.useState(false);
+  const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -24,6 +35,26 @@ const Contact: React.FC = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  const validateForm = () => {
+    if (!formData.name.trim()) {
+      setError('Name is required');
+      return false;
+    }
+    if (!formData.email.trim()) {
+      setError('Email is required');
+      return false;
+    }
+    if (!formData.subject.trim()) {
+      setError('Subject is required');
+      return false;
+    }
+    if (!formData.message.trim()) {
+      setError('Message is required');
+      return false;
+    }
+    return true;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -312,7 +343,6 @@ const Contact: React.FC = () => {
                 </div>
               </div>
             </div>
-            </div>
 
             {/* Company Info */}
             <div className="space-y-8 animate-fade-in-right animation-delay-300">
@@ -371,20 +401,12 @@ const Contact: React.FC = () => {
                   </div>
                 </div>
               </div>
-
-
             </div>
           </div>
         </div>
       </section>
 
-    return (
-  <section>
-    {/* Newsletter Section */}
-    <div>Content here</div>
-  </section>
-);
-
+      {/* Newsletter Section */}
       <section className="py-20 bg-gradient-to-r from-amber-500 to-amber-600 relative overflow-hidden">
         {/* Enhanced Animated Background Elements */}
         <div className="absolute inset-0">
