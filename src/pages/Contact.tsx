@@ -378,7 +378,13 @@ const Contact: React.FC = () => {
         </div>
       </section>
 
-      {/* Newsletter Section */}
+    return (
+  <section>
+    {/* Newsletter Section */}
+    <div>Content here</div>
+  </section>
+);
+
       <section className="py-20 bg-gradient-to-r from-amber-500 to-amber-600 relative overflow-hidden">
         {/* Enhanced Animated Background Elements */}
         <div className="absolute inset-0">
