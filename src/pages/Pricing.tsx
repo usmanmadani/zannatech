@@ -1,5 +1,6 @@
 import React from 'react';
 import { Check, ArrowRight, Star } from 'lucide-react';
+import useCurrency from '../hooks/useCurrency';
 
 interface PricingProps {
   onNavigateToContact?: () => void;
@@ -9,7 +10,7 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
   const uiuxPricing = [
     {
       name: 'Basic UI/UX',
-      price: '₦2,000',
+      priceNGN: 2000,
       description: 'Perfect for simple landing pages',
       features: [
         '1 page design',
@@ -23,7 +24,7 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
     },
     {
       name: 'Standard UI/UX',
-      price: '₦2,500',
+      priceNGN: 2500,
       description: 'Great for small business websites',
       features: [
         'Up to 3 pages design',
@@ -38,7 +39,7 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
     },
     {
       name: 'Premium UI/UX',
-      price: '₦3,000',
+      priceNGN: 3000,
       description: 'Ideal for complex applications',
       features: [
         'Up to 5 pages design',
@@ -53,7 +54,7 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
     },
     {
       name: 'Flyer Design',
-      price: '₦3,000',
+      priceNGN: 3000,
       description: 'Single-page flyer design for events or promotions',
       features: [
         'Custom design',
@@ -68,7 +69,7 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
   const developmentPricing = [
     {
       name: 'Starter Website',
-      price: '₦200,000',
+      priceNGN: 200000,
       description: 'Perfect for small businesses',
       features: [
         'Up to 5 pages',
@@ -83,7 +84,7 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
     },
     {
       name: 'Business Website',
-      price: '₦500,000',
+      priceNGN: 500000,
       description: 'Great for growing businesses',
       features: [
         'Up to 15 pages',
@@ -99,7 +100,7 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
     },
     {
       name: 'Enterprise Solution',
-      price: '₦2,000,000+',
+      priceNGN: 2000000,
       description: 'Custom solutions for large organizations',
       features: [
         'Unlimited pages',
@@ -113,25 +114,13 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
       ],
       popular: false
     }
-    ,
-    {
-      name: 'Flyer Design',
-      price: '\u20a63,000',
-      description: 'Single-page flyer design for events or promotions',
-      features: [
-        'Custom design',
-        'Print-ready files',
-        '2 revisions',
-        'Fast turnaround'
-      ],
-      popular: false
-    }
+    
   ];
 
   const brandingPricing = [
     {
       name: 'Logo Only',
-      price: '₦5,000',
+      priceNGN: 5000,
       description: 'Simple logo design',
       features: [
         '3 logo concepts',
@@ -144,7 +133,7 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
     },
     {
       name: 'Brand Identity',
-      price: '₦25,000',
+      priceNGN: 25000,
       description: 'Complete brand package',
       features: [
         '5 logo concepts',
@@ -159,7 +148,7 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
     },
     {
       name: 'Complete Branding',
-      price: '₦50,000',
+      priceNGN: 50000,
       description: 'Comprehensive brand solution',
       features: [
         'Logo design',
@@ -175,7 +164,7 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
     ,
     {
       name: 'Slide Presentation',
-      price: '₦5,000',
+      priceNGN: 5000,
       description: 'Professional slide deck for pitches and presentations',
       features: [
         '10-15 slides',
@@ -190,7 +179,7 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
   const socialMediaPricing = [
     {
       name: 'Starter Content',
-      price: '₦25,000',
+      priceNGN: 25000,
       description: 'Essential social media posts',
       features: [
         '3 custom posts',
@@ -204,7 +193,7 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
     },
     {
       name: 'Professional Content',
-      price: '₦45,000',
+      priceNGN: 45000,
       description: 'Comprehensive social media package',
       features: [
         '6 custom posts',
@@ -219,7 +208,7 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
     },
     {
       name: 'Premium Content',
-      price: '₦75,000',
+      priceNGN: 75000,
       description: 'Full-service content creation',
       features: [
         '15 custom posts',
@@ -240,7 +229,21 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
     }
   };
 
-  const PricingCard = ({ plan, category }: { plan: any; category: string }) => (
+  const PricingCard = ({ plan, category }: { plan: any; category: string }) => {
+    const { isNigeria, rateNGNtoUSD } = useCurrency();
+
+    const formatPrice = () => {
+      // prefer numeric NGN price
+      const ngn = plan.priceNGN ?? 0;
+      if (isNigeria) {
+        return `₦${ngn.toLocaleString()}`;
+      }
+      const rate = rateNGNtoUSD || 0.0013;
+      const usd = +(ngn * rate).toFixed(2);
+      return `$${usd.toLocaleString()}`;
+    };
+
+    return (
     <div className={`bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 relative border group hover:scale-105 ${
       plan.popular ? 'border-2 border-amber-500' : 'border-amber-100'
     }`}>
@@ -252,12 +255,12 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
           </span>
         </div>
       )}
-      
+
       <div className="text-center mb-8">
         <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-amber-600 transition-colors duration-300">{plan.name}</h3>
         <p className="text-gray-600 mb-4">{plan.description}</p>
-        <div className="text-3xl font-bold text-amber-600 mb-2 animate-count-up">{plan.price}</div>
-        {category === 'development' && plan.price.includes('+') && (
+        <div className="text-3xl font-bold text-amber-600 mb-2 animate-count-up">{formatPrice()}</div>
+        {category === 'development' && plan.priceNGN >= 2000000 && (
           <p className="text-sm text-gray-500">Starting from this price</p>
         )}
       </div>
@@ -283,6 +286,7 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
       </button>
     </div>
   );
+  };
 
   return (
 
