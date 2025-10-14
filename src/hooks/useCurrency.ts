@@ -15,23 +15,23 @@ export default function useCurrency() {
 
   useEffect(() => {
     const detectCountryByGeoIP = async (): Promise<boolean> => {
+      // Strict behavior:
+      // - If geo-IP responds with a country code, return whether it's NG.
+      // - If geo-IP fails or times out, default to NG (i.e., treat as Nigeria).
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 3000); // 3s timeout
       try {
-        // ipapi.co provides a simple JSON endpoint with country code
-        const res = await fetch('https://ipapi.co/json/');
-        if (!res.ok) throw new Error('Geo-IP fetch failed');
+        const res = await fetch('https://ipapi.co/json/', { signal: controller.signal });
+        clearTimeout(timeout);
+        if (!res.ok) return true; // default to NG on unexpected status
         const data = await res.json();
         const country = (data && data.country) ? String(data.country).toUpperCase() : null;
+        if (!country) return true; // default to NG if no country provided
         return country === 'NG';
       } catch (e) {
-        // fallback to locale detection
-        try {
-          const locale = Intl.DateTimeFormat().resolvedOptions().locale || navigator.language || 'en-US';
-          const regionMatch = locale.match(/-([A-Z]{2})$/i);
-          const region = regionMatch ? regionMatch[1].toUpperCase() : null;
-          return region === 'NG';
-        } catch (err) {
-          return true;
-        }
+        // On any error (network, timeout, CORS), default to Nigeria
+        clearTimeout(timeout);
+        return true;
       }
     };
 
