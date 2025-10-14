@@ -14,35 +14,42 @@ export default function useCurrency() {
   const [info, setInfo] = useState<CurrencyInfo>({ isNigeria: true, rateNGNtoUSD: null, loading: true, error: null });
 
   useEffect(() => {
-    const detectCountry = () => {
+    const detectCountryByGeoIP = async (): Promise<boolean> => {
       try {
-        // Try to use Intl API to get region from resolvedOptions() if available
-        const locale = Intl.DateTimeFormat().resolvedOptions().locale || navigator.language || 'en-US';
-        const regionMatch = locale.match(/-([A-Z]{2})$/i);
-        const region = regionMatch ? regionMatch[1].toUpperCase() : null;
-        return region === 'NG';
+        // ipapi.co provides a simple JSON endpoint with country code
+        const res = await fetch('https://ipapi.co/json/');
+        if (!res.ok) throw new Error('Geo-IP fetch failed');
+        const data = await res.json();
+        const country = (data && data.country) ? String(data.country).toUpperCase() : null;
+        return country === 'NG';
       } catch (e) {
-        return true; // assume Nigeria when in doubt
+        // fallback to locale detection
+        try {
+          const locale = Intl.DateTimeFormat().resolvedOptions().locale || navigator.language || 'en-US';
+          const regionMatch = locale.match(/-([A-Z]{2})$/i);
+          const region = regionMatch ? regionMatch[1].toUpperCase() : null;
+          return region === 'NG';
+        } catch (err) {
+          return true;
+        }
       }
     };
 
-    const isNigeria = detectCountry();
+    const init = async () => {
+      const isNigeria = await detectCountryByGeoIP();
 
-    const fetchRate = async () => {
       try {
-        // Use exchangerate.host (no API key) to get latest conversion
         const res = await fetch('https://api.exchangerate.host/latest?base=NGN&symbols=USD');
         if (!res.ok) throw new Error('Rate fetch failed');
         const data = await res.json();
         const rate = data && data.rates && data.rates.USD ? Number(data.rates.USD) : FALLBACK_RATE;
         setInfo({ isNigeria, rateNGNtoUSD: rate, loading: false, error: null });
       } catch (err: any) {
-        // Fallback
         setInfo({ isNigeria, rateNGNtoUSD: FALLBACK_RATE, loading: false, error: err?.message || 'Failed to fetch rate' });
       }
     };
 
-    fetchRate();
+    init();
   }, []);
 
   return info;

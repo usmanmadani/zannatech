@@ -387,29 +387,30 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-white p-6 rounded-2xl shadow-lg border border-amber-100 animate-fade-in-up hover:shadow-xl transition-all duration-300 group hover:scale-105" style={{ animationDelay: '200ms' }}>
-              <h3 className="font-bold text-gray-900 mb-2 group-hover:text-amber-600 transition-colors duration-300">AI Integration</h3>
-              <p className="text-2xl font-bold text-amber-600 mb-2 animate-count-up">₦150,000+</p>
-              <p className="text-gray-600 text-sm">Custom AI solutions and chatbot development</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-2xl shadow-lg border border-amber-100 animate-fade-in-up hover:shadow-xl transition-all duration-300 group hover:scale-105" style={{ animationDelay: '400ms' }}>
-              <h3 className="font-bold text-gray-900 mb-2 group-hover:text-amber-600 transition-colors duration-300">Digital Marketing</h3>
-              <p className="text-2xl font-bold text-amber-600 mb-2 animate-count-up animation-delay-200">₦50,000/mo</p>
-              <p className="text-gray-600 text-sm">Social media management and ad campaigns</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-2xl shadow-lg border border-amber-100 animate-fade-in-up hover:shadow-xl transition-all duration-300 group hover:scale-105" style={{ animationDelay: '600ms' }}>
-              <h3 className="font-bold text-gray-900 mb-2 group-hover:text-amber-600 transition-colors duration-300">SEO Services</h3>
-              <p className="text-2xl font-bold text-amber-600 mb-2 animate-count-up animation-delay-500">₦30,000/mo</p>
-              <p className="text-gray-600 text-sm">Search engine optimization and content strategy</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-2xl shadow-lg border border-amber-100 animate-fade-in-up hover:shadow-xl transition-all duration-300 group hover:scale-105" style={{ animationDelay: '800ms' }}>
-              <h3 className="font-bold text-gray-900 mb-2 group-hover:text-amber-600 transition-colors duration-300">Maintenance</h3>
-              <p className="text-2xl font-bold text-amber-600 mb-2 animate-count-up animation-delay-700">₦25,000/mo</p>
-              <p className="text-gray-600 text-sm">Website updates, security, and support</p>
-            </div>
+            {(() => {
+              const { isNigeria, rateNGNtoUSD } = useCurrency();
+              const format = (ngn: number, monthly = false) => {
+                if (isNigeria) return `₦${ngn.toLocaleString()}${monthly ? '/mo' : ''}`;
+                const rate = rateNGNtoUSD || 0.0013;
+                const usd = +(ngn * rate).toFixed(2);
+                return `$${usd.toLocaleString()}${monthly ? '/mo' : ''}`;
+              };
+
+              const cards = [
+                { title: 'AI Integration', priceNGN: 150000, desc: 'Custom AI solutions and chatbot development' },
+                { title: 'Digital Marketing', priceNGN: 50000, desc: 'Social media management and ad campaigns', monthly: true },
+                { title: 'SEO Services', priceNGN: 30000, desc: 'Search engine optimization and content strategy', monthly: true },
+                { title: 'Maintenance', priceNGN: 25000, desc: 'Website updates, security, and support', monthly: true },
+              ];
+
+              return cards.map((c, i) => (
+                <div key={i} className="bg-white p-6 rounded-2xl shadow-lg border border-amber-100 animate-fade-in-up hover:shadow-xl transition-all duration-300 group hover:scale-105" style={{ animationDelay: `${200 + i * 200}ms` }}>
+                  <h3 className="font-bold text-gray-900 mb-2 group-hover:text-amber-600 transition-colors duration-300">{c.title}</h3>
+                  <p className="text-2xl font-bold text-amber-600 mb-2 animate-count-up">{format(c.priceNGN, !!c.monthly)}</p>
+                  <p className="text-gray-600 text-sm">{c.desc}</p>
+                </div>
+              ));
+            })()}
           </div>
         </div>
       </section>
