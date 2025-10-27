@@ -219,7 +219,7 @@ const CACRegistration: React.FC = () => {
               className="inline-flex items-center justify-center px-6 py-3 bg-white text-amber-600 text-lg font-semibold rounded-xl hover:bg-gray-50 transform hover:scale-105 transition-all duration-300 shadow-lg"
             >
               <Phone className="w-5 h-5 mr-2" />
-              Call Us: +234 814 910 4085
+              Call Us: +234 7045494824
             </a>
           </div>
         </div>
