@@ -17,6 +17,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, setCurrentPage }
     { name: 'Portfolio', id: 'portfolio' },
     { name: 'Pricing', id: 'pricing' },
     { name: 'FAQ', id: 'faq' },
+    { name: 'Business Registration (CAC)', id: 'cac' },
   ];
 
   const handleNavClick = (pageId: string) => {
@@ -52,7 +53,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, setCurrentPage }
             {/* Desktop Navigation */}
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-8">
-                {navigation.map((item) => (
+                {navigation.slice(0, 6).map((item) => (
                   <button
                     key={item.id}
                     onClick={() => handleNavClick(item.id)}
@@ -68,8 +69,14 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, setCurrentPage }
               </div>
             </div>
 
-            {/* CTA Button */}
-            <div className="hidden md:block">
+            {/* CTA Buttons */}
+            <div className="hidden md:flex items-center gap-3">
+              <button
+                onClick={() => handleNavClick('cac')}
+                className="border-2 border-amber-500 text-amber-600 px-4 py-2 rounded-xl text-sm font-medium hover:bg-amber-50 transition-all duration-300"
+              >
+                Business Registration (CAC)
+              </button>
               <button
                 onClick={() => handleNavClick('contact')}
                 className="bg-gradient-to-r from-amber-400 to-amber-500 text-white px-6 py-3 rounded-xl text-sm font-medium hover:from-amber-500 hover:to-amber-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
@@ -93,7 +100,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, setCurrentPage }
           {isMenuOpen && (
             <div className="md:hidden">
               <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
-                {navigation.map((item) => (
+                {navigation.filter(item => item.id !== 'cac').map((item) => (
                   <button
                     key={item.id}
                     onClick={() => handleNavClick(item.id)}
@@ -106,12 +113,20 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, setCurrentPage }
                     {item.name}
                   </button>
                 ))}
-                <button
-                  onClick={() => handleNavClick('contact')}
-                  className="block w-full mt-4 bg-gradient-to-r from-amber-400 to-amber-500 text-white px-3 py-2 rounded-xl text-base font-medium hover:from-amber-500 hover:to-amber-600 transition-all duration-300"
-                >
-                  Contact Us
-                </button>
+                <div className="flex gap-2 mt-4">
+                  <button
+                    onClick={() => handleNavClick('cac')}
+                    className="flex-1 border-2 border-amber-500 text-amber-600 px-3 py-2 rounded-xl text-base font-medium hover:bg-amber-50 transition-all duration-300"
+                  >
+                    CAC Registration
+                  </button>
+                  <button
+                    onClick={() => handleNavClick('contact')}
+                    className="flex-1 bg-gradient-to-r from-amber-400 to-amber-500 text-white px-3 py-2 rounded-xl text-base font-medium hover:from-amber-500 hover:to-amber-600 transition-all duration-300"
+                  >
+                    Contact Us
+                  </button>
+                </div>
               </div>
             </div>
           )}
