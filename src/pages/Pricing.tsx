@@ -226,8 +226,8 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
   const cacRegistrationPricing = [
     {
       name: 'Business Name Registration',
-      priceNGN: 40000,
-      description: 'Starting from ₦40,000',
+      priceNGN: 45000,
+      description: 'Starting from ₦45,000',
       features: [
         'Business Name Availability Check',
         'CAC Processing & Documentation',
@@ -276,7 +276,12 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
 
   const handleCACRegistration = () => {
     // Navigate to CAC registration page
-    window.location.href = '/cac-registration';
+    if (window.history && window.history.pushState) {
+      window.history.pushState({}, '', '/cac-registration');
+      window.dispatchEvent(new PopStateEvent('popstate'));
+    } else {
+      window.location.href = '/cac-registration';
+    }
   };
 
   const PricingCard = ({ plan, category }: { plan: any; category: string }) => {

@@ -1,13 +1,30 @@
-import React from 'react';
-import { CheckCircle, CreditCard, AlertTriangle, MessageCircle, ArrowRight, Building2, Phone, HelpCircle } from 'lucide-react';
+import React, { useState } from 'react';
+import { CheckCircle, CreditCard, AlertTriangle, MessageCircle, ArrowRight, Building2, Phone, HelpCircle, ChevronDown, ChevronUp, Copy } from 'lucide-react';
 
 const CACRegistration: React.FC = () => {
+  const [showAccountDetails, setShowAccountDetails] = useState(false);
+  const [copySuccess, setCopySuccess] = useState(false);
+
   const handleContinueToForm = () => {
     window.open('https://forms.gle/Yr437rbTPcLhAQTQ7', '_blank', 'noopener,noreferrer');
   };
 
   const handleWhatsAppSupport = () => {
     window.open('https://wa.me/2348149104085?text=Hi%2C%20I%20need%20help%20with%20CAC%20registration', '_blank', 'noopener,noreferrer');
+  };
+
+  const toggleAccountDetails = () => {
+    setShowAccountDetails(!showAccountDetails);
+  };
+
+  const copyAccountNumber = async () => {
+    try {
+      await navigator.clipboard.writeText('7045494824');
+      setCopySuccess(true);
+      setTimeout(() => setCopySuccess(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy account number:', err);
+    }
   };
 
   return (
@@ -36,28 +53,68 @@ const CACRegistration: React.FC = () => {
                 <CreditCard className="w-8 h-8 text-amber-600" />
               </div>
               <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">💳 Payment Details</h2>
+              <p className="text-gray-600 mb-4">Click below to view our secure payment account details</p>
             </div>
 
-            <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 mb-8">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <div>
-                    <label className="text-sm font-medium text-gray-500 uppercase tracking-wide">Account Name</label>
-                    <p className="text-xl font-bold text-gray-900">ZANNATECH INNOVATIONS LTD</p>
+            {/* Toggle Button */}
+            <div className="text-center mb-6">
+              <button
+                onClick={toggleAccountDetails}
+                className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-amber-400 to-amber-500 text-white font-semibold rounded-xl hover:from-amber-500 hover:to-amber-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+              >
+                {showAccountDetails ? (
+                  <>
+                    <ChevronUp className="w-5 h-5 mr-2" />
+                    Hide Account Details
+                  </>
+                ) : (
+                  <>
+                    <ChevronDown className="w-5 h-5 mr-2" />
+                    View Account Details
+                  </>
+                )}
+              </button>
+            </div>
+
+            {/* Account Details - Collapsible */}
+            <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
+              showAccountDetails ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+            }`}>
+              <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 mb-8 border-2 border-amber-200">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <div className="animate-fade-in-up">
+                      <label className="text-sm font-medium text-gray-500 uppercase tracking-wide">Account Name</label>
+                      <p className="text-xl font-bold text-gray-900">ZANNATECH INNOVATIONS LTD</p>
+                    </div>
+                    <div className="animate-fade-in-up" style={{animationDelay: '100ms'}}>
+                      <label className="text-sm font-medium text-gray-500 uppercase tracking-wide">Account Number</label>
+                      <div className="flex items-center gap-3">
+                        <p className="text-xl font-bold text-gray-900">7045494824</p>
+                        <button
+                          onClick={copyAccountNumber}
+                          className={`inline-flex items-center px-3 py-1 rounded-lg text-sm font-medium transition-all duration-300 ${
+                            copySuccess 
+                              ? 'bg-green-100 text-green-700 border border-green-300' 
+                              : 'bg-amber-100 text-amber-700 border border-amber-300 hover:bg-amber-200'
+                          }`}
+                          title="Copy account number"
+                        >
+                          <Copy className="w-4 h-4 mr-1" />
+                          {copySuccess ? 'Copied!' : 'Copy'}
+                        </button>
+                      </div>
+                    </div>
+                    <div className="animate-fade-in-up" style={{animationDelay: '200ms'}}>
+                      <label className="text-sm font-medium text-gray-500 uppercase tracking-wide">Bank</label>
+                      <p className="text-xl font-bold text-gray-900">Moniepoint MFB</p>
+                    </div>
                   </div>
-                  <div>
-                    <label className="text-sm font-medium text-gray-500 uppercase tracking-wide">Account Number</label>
-                    <p className="text-xl font-bold text-gray-900">7045494824</p>
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium text-gray-500 uppercase tracking-wide">Bank</label>
-                    <p className="text-xl font-bold text-gray-900">Moniepoint MFB</p>
-                  </div>
-                </div>
-                <div className="flex items-center justify-center">
-                  <div className="text-center p-6 bg-amber-50 rounded-xl">
-                    <Building2 className="w-16 h-16 text-amber-600 mx-auto mb-4" />
-                    <p className="text-sm text-gray-600 font-medium">Secure Business Account</p>
+                  <div className="flex items-center justify-center">
+                    <div className="text-center p-6 bg-amber-50 rounded-xl animate-fade-in-up" style={{animationDelay: '300ms'}}>
+                      <Building2 className="w-16 h-16 text-amber-600 mx-auto mb-4" />
+                      <p className="text-sm text-gray-600 font-medium">Secure Business Account</p>
+                    </div>
                   </div>
                 </div>
               </div>
