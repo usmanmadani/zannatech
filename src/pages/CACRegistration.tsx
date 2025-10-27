@@ -1,69 +1,168 @@
 import React from 'react';
-import { CheckCircle, Mail, MessageCircle } from 'lucide-react';
+import { CheckCircle, CreditCard, AlertTriangle, MessageCircle, ArrowRight, Building2, Phone, HelpCircle } from 'lucide-react';
 
 const CACRegistration: React.FC = () => {
+  const handleContinueToForm = () => {
+    window.open('https://forms.gle/Yr437rbTPcLhAQTQ7', '_blank', 'noopener,noreferrer');
+  };
+
+  const handleWhatsAppSupport = () => {
+    window.open('https://wa.me/2348149104085?text=Hi%2C%20I%20need%20help%20with%20CAC%20registration', '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <div className="pt-20">
       {/* Header */}
       <section className="py-16 bg-gradient-to-br from-amber-50 to-white">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="text-4xl mb-4">🧾</div>
           <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
-            Register Your Business with CAC
+            CAC Registration Payment & Confirmation
           </h1>
           <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
-            “Easily register your business name or company with the Corporate Affairs Commission through ZannaTech’s trusted portal.”
+            Thank you for choosing ZannaTech to handle your CAC registration.
+            <br />
+            Please make payment to the account below to begin your registration process.
           </p>
         </div>
       </section>
 
-      {/* Intro */}
-      <section className="pb-8 bg-white">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-gray-700 text-base md:text-lg">
-            Fill out the form below to begin your CAC registration. Our team will guide you through the next steps once your submission is received.
+      {/* Payment Details Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-gradient-to-br from-amber-50 to-white rounded-2xl shadow-xl border-2 border-amber-200 p-8 md:p-12">
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-amber-100 rounded-full mb-4">
+                <CreditCard className="w-8 h-8 text-amber-600" />
+              </div>
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">💳 Payment Details</h2>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 mb-8">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <div>
+                    <label className="text-sm font-medium text-gray-500 uppercase tracking-wide">Account Name</label>
+                    <p className="text-xl font-bold text-gray-900">ZANNATECH INNOVATIONS LTD</p>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-gray-500 uppercase tracking-wide">Account Number</label>
+                    <p className="text-xl font-bold text-gray-900">7045494824</p>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-gray-500 uppercase tracking-wide">Bank</label>
+                    <p className="text-xl font-bold text-gray-900">Moniepoint MFB</p>
+                  </div>
+                </div>
+                <div className="flex items-center justify-center">
+                  <div className="text-center p-6 bg-amber-50 rounded-xl">
+                    <Building2 className="w-16 h-16 text-amber-600 mx-auto mb-4" />
+                    <p className="text-sm text-gray-600 font-medium">Secure Business Account</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+              <div className="flex">
+                <div className="ml-3">
+                  <h3 className="text-sm font-medium text-blue-800 flex items-center">
+                    <AlertTriangle className="w-4 h-4 mr-2" />
+                    Important Payment Notes
+                  </h3>
+                  <div className="mt-2 text-sm text-blue-700 space-y-2">
+                    <p className="flex items-start">
+                      <CheckCircle className="w-4 h-4 mr-2 mt-0.5 text-green-600" />
+                      After making payment, click the button below to fill out your CAC registration details.
+                    </p>
+                    <p className="flex items-start">
+                      <AlertTriangle className="w-4 h-4 mr-2 mt-0.5 text-amber-600" />
+                      Ensure the name on your payment matches the name you use on the form for easy verification.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="text-center">
+              <button
+                onClick={handleContinueToForm}
+                className="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white text-lg font-semibold rounded-xl hover:from-green-600 hover:to-green-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+              >
+                <ArrowRight className="w-5 h-5 mr-2" />
+                Continue to Registration Form
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-16 bg-gradient-to-br from-amber-50 to-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">💬 Frequently Asked Questions</h2>
+            <p className="text-lg text-gray-600">Quick answers to common questions about CAC registration</p>
+          </div>
+
+          <div className="space-y-6">
+            <div className="bg-white rounded-xl shadow-md p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2 flex items-center">
+                <HelpCircle className="w-5 h-5 mr-2 text-amber-600" />
+                How long does CAC registration take?
+              </h3>
+              <p className="text-gray-600">
+                Business Name registration typically takes 3-7 business days, while Limited Liability Company registration takes 7-14 business days after payment and form submission.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-md p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2 flex items-center">
+                <HelpCircle className="w-5 h-5 mr-2 text-amber-600" />
+                What documents do I need to provide?
+              </h3>
+              <p className="text-gray-600">
+                You'll need valid ID, proposed business names (3 options), business address, and details of directors/proprietors. Specific requirements will be outlined in the registration form.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-md p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2 flex items-center">
+                <HelpCircle className="w-5 h-5 mr-2 text-amber-600" />
+                What happens after I make payment?
+              </h3>
+              <p className="text-gray-600">
+                After payment, fill out the registration form. Our team will verify your payment and begin processing your CAC registration immediately. You'll receive updates throughout the process.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Support Section */}
+      <section className="py-16 bg-amber-500">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-full mb-6">
+            <MessageCircle className="w-8 h-8 text-amber-600" />
+          </div>
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Need Help? 🤝</h2>
+          <p className="text-xl text-amber-100 mb-8">
+            Our support team is ready to assist you with any questions about CAC registration.
           </p>
-        </div>
-      </section>
-
-      {/* Embedded Form */}
-      <section className="pb-16 bg-white">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-2xl shadow-lg border border-amber-100 overflow-hidden">
-            <iframe
-              src="https://forms.gle/Yr437rbTPcLhAQTQ7"
-              title="CAC Registration Form"
-              className="w-full"
-              style={{ minHeight: '900px', height: '75vh', border: '0' }}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button
+              onClick={handleWhatsAppSupport}
+              className="inline-flex items-center justify-center px-6 py-3 bg-green-600 text-white text-lg font-semibold rounded-xl hover:bg-green-700 transform hover:scale-105 transition-all duration-300 shadow-lg"
             >
-              Loading form...
-            </iframe>
-          </div>
-        </div>
-      </section>
-
-      {/* Confirmation / Follow-up */}
-      <section className="pb-20 bg-gradient-to-br from-amber-50 to-white">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="flex items-center justify-center gap-2 text-green-600 font-semibold mb-4">
-            <CheckCircle size={22} />
-            <span>Once submitted, our representative will contact you via email or WhatsApp within 24 hours.</span>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <MessageCircle className="w-5 h-5 mr-2" />
+              WhatsApp Support
+            </button>
             <a
-              href="https://wa.me/2347045494824"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border-2 border-green-600 text-green-700 hover:bg-green-50 transition-colors"
+              href="tel:+2348149104085"
+              className="inline-flex items-center justify-center px-6 py-3 bg-white text-amber-600 text-lg font-semibold rounded-xl hover:bg-gray-50 transform hover:scale-105 transition-all duration-300 shadow-lg"
             >
-              <MessageCircle size={18} /> Contact via WhatsApp
-            </a>
-            <a
-              href="mailto:zannatechinnovations@gmail.com"
-              className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-white hover:from-amber-500 hover:to-amber-600 transition-colors"
-            >
-              <Mail size={18} /> Email ZannaTech
+              <Phone className="w-5 h-5 mr-2" />
+              Call Us: +234 814 910 4085
             </a>
           </div>
         </div>

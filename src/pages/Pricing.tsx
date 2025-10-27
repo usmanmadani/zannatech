@@ -223,10 +223,60 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
     }
   ];
 
+  const cacRegistrationPricing = [
+    {
+      name: 'Business Name Registration',
+      priceNGN: 40000,
+      description: 'Starting from ₦40,000',
+      features: [
+        'Business Name Availability Check',
+        'CAC Processing & Documentation',
+        'Certificate of Registration',
+        'Professional guidance',
+        'Fast processing'
+      ],
+      popular: false,
+      icon: '🧾'
+    },
+    {
+      name: 'Limited Liability Company',
+      priceNGN: 70000,
+      description: 'Starting from ₦70,000',
+      features: [
+        'Name Reservation',
+        'Incorporation Documents',
+        'RC Number Certificate',
+        'Legal compliance check',
+        'Company seal'
+      ],
+      popular: true,
+      icon: '🏢'
+    },
+    {
+      name: 'NGO / Incorporated Trustees',
+      priceNGN: 150000,
+      description: 'Starting from ₦150,000',
+      features: [
+        'Trustees Registration',
+        'CAC Documentation',
+        'Certificate of Incorporation',
+        'Tax exemption guidance',
+        'Board resolution template'
+      ],
+      popular: false,
+      icon: '🤝'
+    }
+  ];
+
   const handleGetStarted = () => {
     if (onNavigateToContact) {
       onNavigateToContact();
     }
+  };
+
+  const handleCACRegistration = () => {
+    // Navigate to CAC registration page
+    window.location.href = '/cac-registration';
   };
 
   const PricingCard = ({ plan, category }: { plan: any; category: string }) => {
@@ -288,6 +338,62 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
   );
   };
 
+  const CACPricingCard = ({ plan, category }: { plan: any; category: string }) => {
+    const { isNigeria, rateNGNtoUSD } = useCurrency();
+
+    const formatPrice = () => {
+      const ngn = plan.priceNGN ?? 0;
+      if (isNigeria) {
+        return `₦${ngn.toLocaleString()}`;
+      }
+      const rate = rateNGNtoUSD || 0.0013;
+      const usd = +(ngn * rate).toFixed(2);
+      return `$${usd.toLocaleString()}`;
+    };
+
+    return (
+    <div className={`bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 relative border group hover:scale-105 ${
+      plan.popular ? 'border-2 border-amber-500' : 'border-amber-100'
+    }`}>
+      {plan.popular && (
+        <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 animate-bounce-gentle">
+          <span className="bg-amber-500 text-white px-4 py-1 rounded-full text-sm font-medium flex items-center animate-pulse-gentle">
+            <Star size={16} className="mr-1" />
+            Most Popular
+          </span>
+        </div>
+      )}
+
+      <div className="text-center mb-8">
+        <div className="text-4xl mb-4">{plan.icon}</div>
+        <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-amber-600 transition-colors duration-300">{plan.name}</h3>
+        <p className="text-gray-600 mb-4">{plan.description}</p>
+        <div className="text-3xl font-bold text-amber-600 mb-2 animate-count-up">{formatPrice()}</div>
+      </div>
+
+      <ul className="space-y-3 mb-8">
+        {plan.features.map((feature: string, index: number) => (
+          <li key={index} className="flex items-center">
+            <Check className="text-green-500 mr-3 flex-shrink-0 animate-pulse" size={18} style={{ animationDelay: `${index * 100}ms` }} />
+            <span className="text-gray-700">{feature}</span>
+          </li>
+        ))}
+      </ul>
+
+      <button 
+        onClick={handleCACRegistration}
+        className={`w-full py-3 rounded-xl font-semibold transition-all duration-300 ${
+          plan.popular
+            ? 'bg-gradient-to-r from-amber-400 to-amber-500 text-white hover:from-amber-500 hover:to-amber-600 shadow-lg hover:shadow-xl transform hover:scale-105'
+            : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
+        }`}
+      >
+        Proceed to Register
+      </button>
+    </div>
+  );
+  };
+
   return (
 
     <div className="pt-20">
@@ -306,8 +412,26 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
         </div>
       </section>
 
+      {/* CAC Registration Pricing */}
+      <section id="cac-pricing" className="py-20 bg-gradient-to-br from-amber-50 to-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">CAC Business Registration</h2>
+            <p className="text-lg text-gray-600">Professional business registration services with CAC</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {cacRegistrationPricing.map((plan, index) => (
+              <div key={index} className="animate-fade-in-up" style={{ animationDelay: `${index * 200}ms` }}>
+                <CACPricingCard plan={plan} category="cac" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Development Pricing */}
-      <section id="development-pricing" className="py-20 bg-gradient-to-br from-amber-50 to-white">
+      <section id="development-pricing" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-fade-in">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Development Pricing</h2>
@@ -325,7 +449,7 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
       </section>
 
       {/* UI/UX Pricing */}
-      <section id="uiux-pricing" className="py-20 bg-white">
+      <section id="uiux-pricing" className="py-20 bg-gradient-to-br from-amber-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-fade-in">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">UI/UX Design Pricing</h2>
