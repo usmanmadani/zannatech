@@ -41,8 +41,10 @@ const loadMapboxFromCdn = () => {
   });
 };
 
+import { useTheme } from '../context/ThemeContext';
+
 const LocationSection: React.FC = () => {
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const { theme, toggle } = useTheme();
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstance = useRef<any>(null);
   const markerRef = useRef<any>(null);
@@ -107,7 +109,7 @@ const LocationSection: React.FC = () => {
           <h2 className="text-2xl md:text-3xl font-bold">Our Location</h2>
           <button
             type="button"
-            onClick={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))}
+            onClick={toggle}
             className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border transition-all duration-200 hover:opacity-90 ${theme === 'dark' ? 'border-gray-700 bg-[#0f0f0f] text-[#e5e5e5]' : 'border-gray-200 bg-white text-gray-800 shadow-sm'}`}
             aria-label="Toggle Light/Dark Map"
             title="Toggle Light/Dark Map"

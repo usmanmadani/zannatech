@@ -4,8 +4,12 @@ import App from './App.tsx';
 import './index.css'
 import './styles/animations.css';
 
+import { ThemeProvider } from './context/ThemeContext';
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
   </StrictMode>
 );
