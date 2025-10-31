@@ -41,10 +41,9 @@ const loadMapboxFromCdn = () => {
   });
 };
 
-import { useTheme } from '../context/ThemeContext';
 
 const LocationSection: React.FC = () => {
-  const { theme, toggle } = useTheme();
+  const theme: 'light' = 'light';
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstance = useRef<any>(null);
   const markerRef = useRef<any>(null);
@@ -96,9 +95,9 @@ const LocationSection: React.FC = () => {
     }
   }, []);
 
-  const containerTheme = theme === 'dark' ? 'bg-[#0f0f0f] text-[#e5e5e5]' : 'bg-white text-gray-900';
-  const cardTheme = theme === 'dark' ? 'bg-[#111111] border-gray-800' : 'bg-white border-gray-200';
-  const mutedText = theme === 'dark' ? 'text-gray-300' : 'text-gray-600';
+  const containerTheme = 'bg-white text-gray-900';
+  const cardTheme = 'bg-white border-gray-200';
+  const mutedText = 'text-gray-600';
 
   const directionsHref = 'https://www.google.com/maps/dir/?api=1&destination=ZannaTech%20Innovations%20Ltd%2C%20Abuja%2C%20Nigeria';
 
@@ -107,16 +106,6 @@ const LocationSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl md:text-3xl font-bold">Our Location</h2>
-          <button
-            type="button"
-            onClick={toggle}
-            className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border transition-all duration-200 hover:opacity-90 ${theme === 'dark' ? 'border-gray-700 bg-[#0f0f0f] text-[#e5e5e5]' : 'border-gray-200 bg-white text-gray-800 shadow-sm'}`}
-            aria-label="Toggle Light/Dark Map"
-            title="Toggle Light/Dark Map"
-          >
-            <span role="img" aria-label="theme">🌓</span>
-            <span className="text-sm font-medium">{theme === 'dark' ? 'Dark' : 'Light'} Mode</span>
-          </button>
         </div>
 
         <div className={`grid grid-cols-1 lg:grid-cols-3 gap-6`}>          

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Menu, X, Phone, Mail, MapPin } from 'lucide-react';
-import { useTheme } from '../context/ThemeContext';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -10,7 +9,6 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children, currentPage, setCurrentPage }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { theme, toggle } = useTheme();
 
   const navigation = [
     { name: 'Home', id: 'home' },
@@ -29,9 +27,9 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, setCurrentPage }
   };
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100 transition-colors">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="bg-white dark:bg-gray-900 shadow-sm sticky top-0 z-50 transition-colors">
+      <header className="bg-white shadow-sm sticky top-0 z-50">
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
@@ -62,7 +60,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, setCurrentPage }
                     className={`px-3 py-2 text-sm font-medium transition-colors ${
                       currentPage === item.id
                         ? 'text-amber-600 border-b-2 border-amber-600'
-                        : 'text-gray-700 dark:text-gray-300 hover:text-amber-600'
+                        : 'text-gray-700 hover:text-amber-600'
                     }`}
                   >
                     {item.name}
@@ -71,7 +69,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, setCurrentPage }
               </div>
             </div>
 
-            {/* CTA Buttons + Theme toggle */}
+            {/* CTA Buttons */}
             <div className="hidden md:flex items-center gap-3">
               <button
                 onClick={() => handleNavClick('cac')}
@@ -85,16 +83,13 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, setCurrentPage }
               >
                 Contact Us
               </button>
-              <button onClick={toggle} className="ml-2 px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" aria-label="Toggle theme">
-                {theme === 'dark' ? 'Light' : 'Dark'}
-              </button>
             </div>
 
             {/* Mobile menu button */}
             <div className="md:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-gray-700 dark:text-gray-200 hover:text-amber-600 transition-colors"
+                className="text-gray-700 hover:text-amber-600 transition-colors"
               >
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -104,7 +99,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, setCurrentPage }
           {/* Mobile Navigation */}
             {isMenuOpen && (
             <div className="md:hidden">
-              <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+              <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
                 {navigation.filter(item => item.id !== 'cac').map((item) => (
                   <button
                     key={item.id}
@@ -112,7 +107,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, setCurrentPage }
                     className={`block px-3 py-2 text-base font-medium w-full text-left transition-colors ${
                       currentPage === item.id
                         ? 'text-amber-600 bg-amber-50'
-                        : 'text-gray-700 dark:text-gray-300 hover:text-amber-600 hover:bg-gray-50 dark:hover:bg-gray-800'
+                        : 'text-gray-700 hover:text-amber-600 hover:bg-gray-50'
                     }`}
                   >
                     {item.name}
@@ -132,9 +127,6 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, setCurrentPage }
                     Contact Us
                   </button>
                 </div>
-                <div className="px-2 pb-3">
-                  <button onClick={toggle} className="w-full mt-2 px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">{theme === 'dark' ? 'Light' : 'Dark'} Mode</button>
-                </div>
               </div>
             </div>
           )}
@@ -145,7 +137,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, setCurrentPage }
       <main>{children}</main>
 
       {/* Footer */}
-      <footer className="bg-gray-900 dark:bg-black text-white dark:text-gray-200 transition-colors">
+      <footer className="bg-gray-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {/* Company Info */}
@@ -161,7 +153,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, setCurrentPage }
                   <p className="text-sm text-gray-400">INNOVATIONS LIMITED</p>
                 </div>
               </div>
-              <p className="text-gray-300 dark:text-gray-400 mb-4">
+              <p className="text-gray-300 mb-4">
                 Transforming businesses with powerful digital solutions. We specialize in custom app development, 
                 web design, AI integration, and digital marketing services.
               </p>
@@ -176,7 +168,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, setCurrentPage }
                   <li key={item.id}>
                     <button
                       onClick={() => handleNavClick(item.id)}
-                      className="text-gray-300 dark:text-gray-400 hover:text-amber-400 transition-colors"
+                      className="text-gray-300 hover:text-amber-400 transition-colors"
                     >
                       {item.name}
                     </button>
@@ -197,18 +189,18 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, setCurrentPage }
                 </div>
                 <div className="flex items-center space-x-3">
                   <Phone size={18} className="text-amber-400 flex-shrink-0" />
-                  <a href="https://wa.me/23481149104085" target="_blank" rel="noopener noreferrer" className="text-gray-300 dark:text-gray-400 hover:text-green-600 transition-colors">+234 811 4910 4085</a>
+                  <a href="https://wa.me/23481149104085" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-green-600 transition-colors">+234 811 4910 4085</a>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Mail size={18} className="text-amber-400 flex-shrink-0" />
-                  <span className="text-gray-300 dark:text-gray-400">zannatechinnovations@gmail.com</span>
+                  <span className="text-gray-300">zannatechinnovations@gmail.com</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="border-t border-gray-800 dark:border-gray-800 mt-8 pt-8 text-center">
-            <p className="text-gray-400 dark:text-gray-500">
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center">
+            <p className="text-gray-400">
               © {new Date().getFullYear()} ZannaTech Innovation Limited. All rights reserved.
             </p>
           </div>
