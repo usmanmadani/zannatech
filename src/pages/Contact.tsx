@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { MapPin, Phone, Mail, Clock, Facebook, Instagram, Twitter } from 'lucide-react';
+import LocationSection from '../components/LocationSection';
 
 const Contact: React.FC = () => {
   // Hook for tracking scroll position
@@ -406,6 +407,14 @@ const Contact: React.FC = () => {
         </div>
       </section>
 
+      {/* Location Section */}
+      <section>
+        {/* Inject interactive map + contact card with theme toggle */}
+        <div className="pt-0">
+          {/* Component import below at top of file */}
+        </div>
+      </section>
+
       {/* Newsletter Section */}
       <section className="py-20 bg-gradient-to-r from-amber-500 to-amber-600 relative overflow-hidden">
         {/* Enhanced Animated Background Elements */}
@@ -445,6 +454,9 @@ const Contact: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Location component mount */}
+      <LocationSection />
     </div>
   );
 };
