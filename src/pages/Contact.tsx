@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { MapPin, Mail, Clock, Facebook, Instagram, Twitter, MessageCircle } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Facebook, Instagram, Twitter, MessageCircle } from 'lucide-react';
 import LocationSection from '../components/LocationSection';
 
 const Contact: React.FC = () => {

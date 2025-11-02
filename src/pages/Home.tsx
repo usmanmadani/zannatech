@@ -133,9 +133,6 @@ const Home: React.FC<{ setCurrentPage?: (page: string) => void }> = ({ setCurren
         </div>
       </section>
 
-      {/* Animated Testimonials Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Animated Portfolio Preview Section */}
       <section className="py-20 bg-gradient-to-br from-amber-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -251,7 +248,7 @@ const Home: React.FC<{ setCurrentPage?: (page: string) => void }> = ({ setCurren
         <div className="absolute inset-0">
           <div className="absolute top-10 left-10 w-32 h-32 bg-white/10 rounded-full animate-float"></div>
           <div className="absolute bottom-10 right-10 w-24 h-24 bg-white/10 rounded-full animate-float animation-delay-2000"></div>
-          <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white/10 rounded-full animate-float animation-delay-4000"></div>
+        <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white/10 rounded-full animate-float animation-delay-4000"></div>
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
@@ -270,7 +267,8 @@ const Home: React.FC<{ setCurrentPage?: (page: string) => void }> = ({ setCurren
               <ArrowRight className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1" size={20} />
             </button>
             <a href="https://wa.me/2347045494824" target="_blank" rel="noopener noreferrer" className="border-2 border-white text-white px-8 py-4 rounded-xl text-lg font-semibold hover:bg-white hover:text-amber-600 transition-all duration-300 hover:scale-105">
-              Schedule a Chat on WhatsAppn            </a>
+              Schedule a Chat on WhatsApp
+            </a>
           </div>
         </div>
       </section>
