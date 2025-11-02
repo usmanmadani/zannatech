@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { MapPin, Phone, Mail, Clock, Facebook, Instagram, Twitter } from 'lucide-react';
+import { MapPin, Mail, Clock, Facebook, Instagram, Twitter, MessageCircle } from 'lucide-react';
 import LocationSection from '../components/LocationSection';
 
 const Contact: React.FC = () => {
@@ -183,43 +183,46 @@ const Contact: React.FC = () => {
           </div>
 
           {/* Social Media Links */}
-          <div className="flex justify-center space-x-8 mt-12">
-            <a
-              href="https://wa.me/2347045494824"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-green-500 text-white p-4 rounded-full hover:bg-green-600 transition-all duration-300 hover:scale-110 hover:shadow-lg"
-              title="Contact us on WhatsApp"
-            >
-              <Phone size={24} />
-            </a>
-            <a
-              href="https://www.facebook.com/share/19nmxpgoDY/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-blue-600 text-white p-4 rounded-full hover:bg-blue-700 transition-all duration-300 hover:scale-110 hover:shadow-lg"
-              title="Follow us on Facebook"
-            >
-              <Facebook size={24} />
-            </a>
-            <a
-              href="https://www.instagram.com/zanna_tech_/?utm_source=qr&r=nametag"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-gradient-to-br from-pink-500 via-purple-500 to-orange-500 text-white p-4 rounded-full hover:from-pink-600 hover:via-purple-600 hover:to-orange-600 transition-all duration-300 hover:scale-110 hover:shadow-lg"
-              title="Follow us on Instagram"
-            >
-              <Instagram size={24} />
-            </a>
-            <a
-              href="https://twitter.com/zannatechi"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-black text-white p-4 rounded-full hover:bg-gray-900 transition-all duration-300 hover:scale-110 hover:shadow-lg"
-              title="Follow us on Twitter"
-            >
-              <Twitter size={24} />
-            </a>
+          <div className="text-center mt-12">
+            <p className="text-gray-600 mb-4">Connect with us on social media</p>
+            <div className="flex justify-center space-x-6">
+              <a
+                href="https://wa.me/2347045494824"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-green-500 text-white p-4 rounded-full hover:bg-green-600 transition-all duration-300 hover:scale-110 hover:shadow-lg"
+                title="Chat with us on WhatsApp"
+              >
+                <MessageCircle size={24} />
+              </a>
+              <a
+                href="https://www.facebook.com/share/19nmxpgoDY/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-blue-600 text-white p-4 rounded-full hover:bg-blue-700 transition-all duration-300 hover:scale-110 hover:shadow-lg"
+                title="Follow us on Facebook"
+              >
+                <Facebook size={24} />
+              </a>
+              <a
+                href="https://www.instagram.com/zanna_tech_/?utm_source=qr&r=nametag"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-gradient-to-br from-pink-500 via-purple-500 to-orange-500 text-white p-4 rounded-full hover:from-pink-600 hover:via-purple-600 hover:to-orange-600 transition-all duration-300 hover:scale-110 hover:shadow-lg"
+                title="Follow us on Instagram"
+              >
+                <Instagram size={24} />
+              </a>
+              <a
+                href="https://twitter.com/zannatechi"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-black text-white p-4 rounded-full hover:bg-gray-900 transition-all duration-300 hover:scale-110 hover:shadow-lg"
+                title="Follow us on Twitter"
+              >
+                <Twitter size={24} />
+              </a>
+            </div>
           </div>
         </div>
       </section>

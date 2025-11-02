@@ -210,7 +210,7 @@ const Services: React.FC = () => {
           <p className="text-xl text-amber-100 mb-8 animate-fade-in animation-delay-300">
             Let's discuss your project and create a custom solution for your business
           </p>
-          <button className="bg-white text-amber-600 px-8 py-4 rounded-xl text-lg font-semibold hover:bg-gray-100 transition-all duration-300 inline-flex items-center shadow-lg hover:shadow-xl transform hover:scale-105 animate-fade-in animation-delay-500 group">
+          <button onClick={() => { window.history.pushState({}, '', '/contact'); window.dispatchEvent(new PopStateEvent('popstate')); }} className="bg-white text-amber-600 px-8 py-4 rounded-xl text-lg font-semibold hover:bg-gray-100 transition-all duration-300 inline-flex items-center shadow-lg hover:shadow-xl transform hover:scale-105 animate-fade-in animation-delay-500 group">
             Request a Free Consultation
             <ArrowRight className="ml-2 transition-transform duration-300 group-hover:translate-x-1" size={20} />
           </button>

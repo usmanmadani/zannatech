@@ -58,7 +58,13 @@ const Home: React.FC<{ setCurrentPage?: (page: string) => void }> = ({ setCurren
   return (
     <div>
       {/* Hero Section */}
-  <Hero onGetQuote={() => (setCurrentPage ? setCurrentPage('services') : window.scrollTo({ top: 0 }))} />
+  <Hero onGetQuote={() => {
+        if (setCurrentPage) setCurrentPage('services');
+        else {
+          window.history.pushState({}, '', '/services');
+          window.dispatchEvent(new PopStateEvent('popstate'));
+        }
+      }} />
 
       {/* Animated Stats Section */}
       <section className="py-20 bg-white">
@@ -130,46 +136,6 @@ const Home: React.FC<{ setCurrentPage?: (page: string) => void }> = ({ setCurren
       {/* Animated Testimonials Section */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 animate-fade-in">
-            <div className="inline-block px-4 py-2 bg-amber-100 text-amber-700 rounded-full text-sm font-medium mb-6 animate-pulse-gentle">
-              Testimonials
-            </div>
-            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              What Our <span className="text-amber-500 animate-text-shimmer bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 bg-clip-text text-transparent bg-[length:200%_100%]">Clients</span> Say
-            </h2>
-            <p className="text-lg text-gray-600">
-              Don't just take our word for it - hear from our satisfied clients
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <div 
-                key={index} 
-                className="bg-white p-8 rounded-2xl shadow-lg border border-amber-100 hover:shadow-xl transition-all duration-300 animate-fade-in-up hover:scale-105 group"
-                style={{ animationDelay: `${index * 200}ms` }}
-              >
-                <div className="flex mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star 
-                      key={i} 
-                      className="text-amber-400 fill-current animate-pulse group-hover:animate-bounce" 
-                      size={20}
-                      style={{ animationDelay: `${i * 100}ms` }}
-                    />
-                  ))}
-                </div>
-                <p className="text-gray-600 mb-6 italic leading-relaxed">"{testimonial.content}"</p>
-                <div>
-                  <div className="font-semibold text-gray-900">{testimonial.name}</div>
-                  <div className="text-sm text-amber-600">{testimonial.company}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Animated Portfolio Preview Section */}
       <section className="py-20 bg-gradient-to-br from-amber-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -210,9 +176,70 @@ const Home: React.FC<{ setCurrentPage?: (page: string) => void }> = ({ setCurren
           </div>
 
           <div className="text-center animate-fade-in animation-delay-1000">
-            <button className="bg-gradient-to-r from-amber-400 to-amber-500 text-white px-8 py-4 rounded-xl font-semibold hover:from-amber-500 hover:to-amber-600 transition-all duration-300 inline-flex items-center shadow-lg hover:shadow-xl transform hover:scale-105 group">
+            <button onClick={() => { window.history.pushState({}, '', '/portfolio'); window.dispatchEvent(new PopStateEvent('popstate')); }} className="bg-gradient-to-r from-amber-400 to-amber-500 text-white px-8 py-4 rounded-xl font-semibold hover:from-amber-500 hover:to-amber-600 transition-all duration-300 inline-flex items-center shadow-lg hover:shadow-xl transform hover:scale-105 group">
               View All Projects
               <ArrowRight className="ml-2 transition-transform duration-300 group-hover:translate-x-1" size={20} />
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section (moved after Portfolio) */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16 animate-fade-in">
+            <div className="inline-block px-4 py-2 bg-amber-100 text-amber-700 rounded-full text-sm font-medium mb-6 animate-pulse-gentle">Testimonials</div>
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">What Our <span className="text-amber-500 animate-text-shimmer bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 bg-clip-text text-transparent bg-[length:200%_100%]">Clients</span> Say</h2>
+            <p className="text-lg text-gray-600">Don't just take our word for it - hear from our satisfied clients</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((t, i) => (
+              <div key={i} className="bg-white p-8 rounded-2xl shadow-lg border border-amber-100 hover:shadow-xl transition-all duration-300 animate-fade-in-up hover:scale-105 group" style={{ animationDelay: `${i * 200}ms` }}>
+                <div className="flex mb-4">{[...Array(t.rating)].map((_, si) => (<Star key={si} className="text-amber-400 fill-current" size={20} style={{ animationDelay: `${si * 100}ms` }} />))}</div>
+                <p className="text-gray-600 mb-6 italic leading-relaxed">"{t.content}"</p>
+                <div><div className="font-semibold text-gray-900">{t.name}</div><div className="text-sm text-amber-600">{t.company}</div></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CAC Registration promo */}
+      <section className="py-16 bg-gradient-to-br from-amber-50 to-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-8 items-center">
+          <div>
+            <h3 className="text-3xl font-bold text-gray-900 mb-3">CAC Registration for Companies and Businesses</h3>
+            <p className="text-gray-600 mb-6">Register your business with the Corporate Affairs Commission quickly and professionally. We handle name search, documentation, and certificate delivery.</p>
+            <div className="flex gap-3 flex-wrap">
+              <button onClick={() => { window.history.pushState({}, '', '/cac-registration'); window.dispatchEvent(new PopStateEvent('popstate')); }} className="bg-amber-500 text-white px-5 py-3 rounded-xl font-semibold hover:bg-amber-600 transition">Register Now</button>
+              <button onClick={() => { window.history.pushState({}, '', '/pricing#cac-pricing'); window.dispatchEvent(new PopStateEvent('popstate')); }} className="border-2 border-amber-500 text-amber-600 px-5 py-3 rounded-xl font-semibold hover:bg-amber-50 transition">View CAC Pricing</button>
+            </div>
+          </div>
+          <div className="bg-white rounded-2xl p-6 shadow-lg border border-amber-100">
+            <img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=700" alt="CAC Registration" className="rounded-xl" />
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing quick-links */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Quick Access to Pricing</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <button onClick={() => { window.history.pushState({}, '', '/pricing#development-pricing'); window.dispatchEvent(new PopStateEvent('popstate')); }} className="bg-white rounded-2xl p-6 shadow-lg border border-amber-100 text-left hover:shadow-xl transition">
+              <div className="text-lg font-semibold mb-2">Development</div>
+              <p className="text-sm text-gray-600">Web and app development packages</p>
+              <span className="inline-block mt-3 text-amber-600 font-semibold">See pricing →</span>
+            </button>
+            <button onClick={() => { window.history.pushState({}, '', '/pricing#uiux-pricing'); window.dispatchEvent(new PopStateEvent('popstate')); }} className="bg-white rounded-2xl p-6 shadow-lg border border-amber-100 text-left hover:shadow-xl transition">
+              <div className="text-lg font-semibold mb-2">UI/UX Design</div>
+              <p className="text-sm text-gray-600">Design packages for apps and websites</p>
+              <span className="inline-block mt-3 text-amber-600 font-semibold">See pricing →</span>
+            </button>
+            <button onClick={() => { window.history.pushState({}, '', '/pricing#social-pricing'); window.dispatchEvent(new PopStateEvent('popstate')); }} className="bg-white rounded-2xl p-6 shadow-lg border border-amber-100 text-left hover:shadow-xl transition">
+              <div className="text-lg font-semibold mb-2">Digital Marketing</div>
+              <p className="text-sm text-gray-600">Content and social media packages</p>
+              <span className="inline-block mt-3 text-amber-600 font-semibold">See pricing →</span>
             </button>
           </div>
         </div>
@@ -242,9 +269,8 @@ const Home: React.FC<{ setCurrentPage?: (page: string) => void }> = ({ setCurren
               Get Your Free Quote
               <ArrowRight className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1" size={20} />
             </button>
-            <button className="border-2 border-white text-white px-8 py-4 rounded-xl text-lg font-semibold hover:bg-white hover:text-amber-600 transition-all duration-300 hover:scale-105">
-              Schedule a Call
-            </button>
+            <a href="https://wa.me/2347045494824" target="_blank" rel="noopener noreferrer" className="border-2 border-white text-white px-8 py-4 rounded-xl text-lg font-semibold hover:bg-white hover:text-amber-600 transition-all duration-300 hover:scale-105">
+              Schedule a Chat on WhatsAppn            </a>
           </div>
         </div>
       </section>

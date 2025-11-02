@@ -2,7 +2,7 @@ import React from 'react';
 import { ArrowRight, Smartphone, Globe, Palette, Brain, TrendingUp, Zap } from 'lucide-react';
 
 interface HeroProps {
-  onGetQuote: () => void;
+  onGetQuote: () => void; // navigate to Services page
 }
 
 const Hero: React.FC<HeroProps> = ({ onGetQuote }) => {
@@ -94,7 +94,9 @@ const Hero: React.FC<HeroProps> = ({ onGetQuote }) => {
         {/* Animated Services Icons */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 mt-20">
           {services.map((service, index) => (
-            <div
+            <button
+              type="button"
+              onClick={onGetQuote}
               key={index}
               className={`flex flex-col items-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 group border border-amber-100 animate-fade-in-up hover:animate-bounce-gentle`}
               style={{ animationDelay: `${2000 + index * 200}ms` }}
@@ -103,7 +105,7 @@ const Hero: React.FC<HeroProps> = ({ onGetQuote }) => {
                 <service.icon className="text-amber-600 transition-transform duration-300 group-hover:scale-110" size={24} />
               </div>
               <span className="text-sm font-medium text-gray-700 text-center transition-colors duration-300 group-hover:text-amber-600">{service.name}</span>
-            </div>
+            </button>
           ))}
         </div>
       </div>
