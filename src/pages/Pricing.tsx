@@ -240,8 +240,8 @@ const Pricing: React.FC<PricingProps> = ({ onNavigateToContact }) => {
     },
     {
       name: 'Limited Liability Company',
-      priceNGN: 70000,
-      description: 'Starting from ₦70,000',
+      priceNGN: 75000,
+      description: 'Starting from ₦75,000',
       features: [
         'Name Reservation',
         'Incorporation Documents',
