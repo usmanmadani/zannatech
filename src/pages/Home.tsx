@@ -84,6 +84,47 @@ const Home: React.FC<{ setCurrentPage?: (page: string) => void }> = ({ setCurren
         </div>
       </section>
 
+      {/* CAC Registration promo */}
+      <section className="py-16 bg-gradient-to-br from-amber-50 to-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-8 items-center">
+          <div>
+            <h3 className="text-3xl font-bold text-gray-900 mb-3">CAC Registration for Companies and Businesses</h3>
+            <p className="text-gray-600 mb-6">Register your business with the Corporate Affairs Commission quickly and professionally. We handle name search, documentation, and certificate delivery.</p>
+            <div className="flex gap-3 flex-wrap">
+              <button onClick={() => { window.history.pushState({}, '', '/cac-registration'); window.dispatchEvent(new PopStateEvent('popstate')); }} className="bg-amber-500 text-white px-5 py-3 rounded-xl font-semibold hover:bg-amber-600 transition">Register Now</button>
+              <button onClick={() => { window.history.pushState({}, '', '/pricing#cac-pricing'); window.dispatchEvent(new PopStateEvent('popstate')); }} className="border-2 border-amber-500 text-amber-600 px-5 py-3 rounded-xl font-semibold hover:bg-amber-50 transition">View CAC Pricing</button>
+            </div>
+          </div>
+          <div className="bg-white rounded-2xl p-6 shadow-lg border border-amber-100">
+            <img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=700" alt="CAC Registration" className="rounded-xl" />
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing quick-links */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Quick Access to Pricing</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <button onClick={() => { window.history.pushState({}, '', '/pricing#development-pricing'); window.dispatchEvent(new PopStateEvent('popstate')); }} className="bg-white rounded-2xl p-6 shadow-lg border border-amber-100 text-left hover:shadow-xl transition">
+              <div className="text-lg font-semibold mb-2">Development</div>
+              <p className="text-sm text-gray-600">Web and app development packages</p>
+              <span className="inline-block mt-3 text-amber-600 font-semibold">See pricing →</span>
+            </button>
+            <button onClick={() => { window.history.pushState({}, '', '/pricing#uiux-pricing'); window.dispatchEvent(new PopStateEvent('popstate')); }} className="bg-white rounded-2xl p-6 shadow-lg border border-amber-100 text-left hover:shadow-xl transition">
+              <div className="text-lg font-semibold mb-2">UI/UX Design</div>
+              <p className="text-sm text-gray-600">Design packages for apps and websites</p>
+              <span className="inline-block mt-3 text-amber-600 font-semibold">See pricing →</span>
+            </button>
+            <button onClick={() => { window.history.pushState({}, '', '/pricing#social-pricing'); window.dispatchEvent(new PopStateEvent('popstate')); }} className="bg-white rounded-2xl p-6 shadow-lg border border-amber-100 text-left hover:shadow-xl transition">
+              <div className="text-lg font-semibold mb-2">Digital Marketing</div>
+              <p className="text-sm text-gray-600">Content and social media packages</p>
+              <span className="inline-block mt-3 text-amber-600 font-semibold">See pricing →</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
       {/* About ZannaTech Section with Parallax Effect */}
       <section className="py-20 bg-gradient-to-br from-amber-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -201,46 +242,6 @@ const Home: React.FC<{ setCurrentPage?: (page: string) => void }> = ({ setCurren
         </div>
       </section>
 
-      {/* CAC Registration promo */}
-      <section className="py-16 bg-gradient-to-br from-amber-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-8 items-center">
-          <div>
-            <h3 className="text-3xl font-bold text-gray-900 mb-3">CAC Registration for Companies and Businesses</h3>
-            <p className="text-gray-600 mb-6">Register your business with the Corporate Affairs Commission quickly and professionally. We handle name search, documentation, and certificate delivery.</p>
-            <div className="flex gap-3 flex-wrap">
-              <button onClick={() => { window.history.pushState({}, '', '/cac-registration'); window.dispatchEvent(new PopStateEvent('popstate')); }} className="bg-amber-500 text-white px-5 py-3 rounded-xl font-semibold hover:bg-amber-600 transition">Register Now</button>
-              <button onClick={() => { window.history.pushState({}, '', '/pricing#cac-pricing'); window.dispatchEvent(new PopStateEvent('popstate')); }} className="border-2 border-amber-500 text-amber-600 px-5 py-3 rounded-xl font-semibold hover:bg-amber-50 transition">View CAC Pricing</button>
-            </div>
-          </div>
-          <div className="bg-white rounded-2xl p-6 shadow-lg border border-amber-100">
-            <img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=700" alt="CAC Registration" className="rounded-xl" />
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing quick-links */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Quick Access to Pricing</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <button onClick={() => { window.history.pushState({}, '', '/pricing#development-pricing'); window.dispatchEvent(new PopStateEvent('popstate')); }} className="bg-white rounded-2xl p-6 shadow-lg border border-amber-100 text-left hover:shadow-xl transition">
-              <div className="text-lg font-semibold mb-2">Development</div>
-              <p className="text-sm text-gray-600">Web and app development packages</p>
-              <span className="inline-block mt-3 text-amber-600 font-semibold">See pricing →</span>
-            </button>
-            <button onClick={() => { window.history.pushState({}, '', '/pricing#uiux-pricing'); window.dispatchEvent(new PopStateEvent('popstate')); }} className="bg-white rounded-2xl p-6 shadow-lg border border-amber-100 text-left hover:shadow-xl transition">
-              <div className="text-lg font-semibold mb-2">UI/UX Design</div>
-              <p className="text-sm text-gray-600">Design packages for apps and websites</p>
-              <span className="inline-block mt-3 text-amber-600 font-semibold">See pricing →</span>
-            </button>
-            <button onClick={() => { window.history.pushState({}, '', '/pricing#social-pricing'); window.dispatchEvent(new PopStateEvent('popstate')); }} className="bg-white rounded-2xl p-6 shadow-lg border border-amber-100 text-left hover:shadow-xl transition">
-              <div className="text-lg font-semibold mb-2">Digital Marketing</div>
-              <p className="text-sm text-gray-600">Content and social media packages</p>
-              <span className="inline-block mt-3 text-amber-600 font-semibold">See pricing →</span>
-            </button>
-          </div>
-        </div>
-      </section>
 
       {/* Animated Contact Preview Section */}
       <section className="py-20 bg-gradient-to-r from-amber-500 to-amber-600 relative overflow-hidden">
