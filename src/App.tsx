@@ -8,8 +8,9 @@ import Pricing from './pages/Pricing';
 import FAQ from './pages/FAQ';
 import Contact from './pages/Contact';
 import CACRegistration from './pages/CACRegistration';
+import ADRPPage from './pages/ADRPPage';
 
-type PageId = 'home' | 'about' | 'services' | 'portfolio' | 'pricing' | 'faq' | 'contact' | 'cac';
+type PageId = 'home' | 'about' | 'services' | 'portfolio' | 'pricing' | 'faq' | 'contact' | 'cac' | 'adrp';
 
 function App() {
   const [currentPage, setCurrentPage] = useState<PageId>('home');
@@ -32,6 +33,8 @@ function App() {
         return '/contact';
       case 'cac':
         return '/cac-registration';
+      case 'adrp':
+        return '/adrp';
       default:
         return '/';
     }
@@ -56,6 +59,8 @@ function App() {
       case '/business-registration':
       case '/cac-registration':
         return 'cac';
+      case '/adrp':
+        return 'adrp';
       default:
         return 'home';
     }
@@ -106,6 +111,8 @@ function App() {
         return <Contact />;
       case 'cac':
         return <CACRegistration />;
+      case 'adrp':
+        return <ADRPPage onNavigateToContact={handleNavigateToContact} />;
       default:
         return <Home />;
     }

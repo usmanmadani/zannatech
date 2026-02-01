@@ -1,5 +1,6 @@
 import React from 'react';
 import Hero from '../components/Hero';
+import ADRPSection from '../components/ADRPSection';
 import { Users, Award, Clock, Star, ArrowRight } from 'lucide-react';
 
 const Home: React.FC<{ setCurrentPage?: (page: string) => void }> = ({ setCurrentPage }) => {
@@ -58,7 +59,7 @@ const Home: React.FC<{ setCurrentPage?: (page: string) => void }> = ({ setCurren
   return (
     <div>
       {/* Hero Section */}
-  <Hero onGetQuote={() => {
+      <Hero onGetQuote={() => {
         if (setCurrentPage) setCurrentPage('services');
         else {
           window.history.pushState({}, '', '/services');
@@ -66,13 +67,16 @@ const Home: React.FC<{ setCurrentPage?: (page: string) => void }> = ({ setCurren
         }
       }} />
 
+      {/* ADRP Section - Highlighting Our New Initiative */}
+      <ADRPSection />
+
       {/* Animated Stats Section */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="text-center animate-fade-in-up hover:animate-bounce-gentle transition-all duration-300 hover:scale-105"
                 style={{ animationDelay: `${index * 200}ms` }}
               >
@@ -137,12 +141,12 @@ const Home: React.FC<{ setCurrentPage?: (page: string) => void }> = ({ setCurren
                 About <span className="text-amber-500 animate-text-shimmer bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 bg-clip-text text-transparent bg-[length:200%_100%]">ZannaTech</span> Innovation Limited
               </h2>
               <p className="text-lg text-gray-600 mb-6 leading-relaxed animate-fade-in animation-delay-500">
-                We are a leading technology company in Nigeria, specializing in creating innovative digital solutions 
-                that transform businesses. Our team of expert developers, designers, and digital strategists work 
+                We are a leading technology company in Nigeria, specializing in creating innovative digital solutions
+                that transform businesses. Our team of expert developers, designers, and digital strategists work
                 together to deliver cutting-edge technology solutions.
               </p>
               <p className="text-gray-600 mb-8 leading-relaxed animate-fade-in animation-delay-700">
-                Since our inception, we've helped over 25 businesses across Africa achieve their digital goals 
+                Since our inception, we've helped over 25 businesses across Africa achieve their digital goals
                 through custom app development, web solutions, AI integration, and comprehensive digital marketing strategies.
               </p>
               <div className="flex flex-wrap gap-6 animate-fade-in animation-delay-1000">
@@ -191,8 +195,8 @@ const Home: React.FC<{ setCurrentPage?: (page: string) => void }> = ({ setCurren
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             {portfolioPreviews.map((project, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group border border-amber-100 animate-fade-in-up hover:scale-105"
                 style={{ animationDelay: `${index * 200}ms` }}
               >
@@ -249,9 +253,9 @@ const Home: React.FC<{ setCurrentPage?: (page: string) => void }> = ({ setCurren
         <div className="absolute inset-0">
           <div className="absolute top-10 left-10 w-32 h-32 bg-white/10 rounded-full animate-float"></div>
           <div className="absolute bottom-10 right-10 w-24 h-24 bg-white/10 rounded-full animate-float animation-delay-2000"></div>
-        <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white/10 rounded-full animate-float animation-delay-4000"></div>
+          <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white/10 rounded-full animate-float animation-delay-4000"></div>
         </div>
-        
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4 animate-fade-in">
             Ready to Transform Your Business?
